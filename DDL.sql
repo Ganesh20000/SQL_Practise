@@ -141,3 +141,23 @@ drop column grade;
 
 
 -- now start new 
+
+
+create table one(
+id int primary key,
+name varchar(255));
+
+create table two(
+b_id int, 
+id int,
+foreign key (id) references one(id),
+branch_name varchar(255));
+
+insert into one values(5,"orry");
+
+
+insert into two values(1,5,"cs");
+
+
+select * from one;
+select * from two ;
