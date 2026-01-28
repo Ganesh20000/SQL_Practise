@@ -131,3 +131,36 @@ select * from phone;
 
 select brand_name,model,price,processor_brand from phone
 where processor_brand='snapdragon' and brand_name='samsung';
+
+-- find all phone with apple and bionic processor
+
+select brand_name,price,processor_brand from phone  
+where processor_brand='bionic' and brand_name='apple';
+
+
+-- find all brand name who sell phone >50000
+
+select distinct(brand_name) from phone
+where price>50000;
+
+
+-- in and not in 
+
+select * from phone
+where processor_brand='snapdragon' or processor_brand='dimensity' or processor_brand='exynos';
+
+-- insted
+
+
+select * from phone
+where processor_brand  in ('snapdragon','dimensity','bionic');
+
+select * from phone
+where processor_brand not  in ('snapdragon','dimensity','bionic');
+
+-- update  
+
+select * from phone
+where processor_brand='mediatek'; 
+
+
