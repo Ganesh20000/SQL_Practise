@@ -1,3 +1,5 @@
+
+
 -- dml data manipulation language
 
 -- dml provide easy way to work with existing data whether you want to add update move or delete data 
@@ -90,7 +92,42 @@ select distinct(os) as 'operating' from phone;
 
 -- combination of both
 
-select distinct brand_name,processor_brand from phone
+select distinct brand_name,processor_brand from phone;
 
 
 -- filter row using where clause 
+
+-- find all samsung phone 
+
+select * from phone 
+where brand_name ="samsung";
+
+-- find all phone with price greather than 50000
+
+select brand_name,model,price,rating,refresh_rate,screen_size from phone 
+where price >50000;
+
+
+-- find all phone price range between 10000 and 20000
+
+select brand_name,model,price from phone
+where price between 10000 and 20000;
+
+
+-- find all phone where rating >80 and price <25000
+
+select model,price,rating from phone
+where rating >80 and price<25000 ;
+
+
+
+-- find all samsung phone with ram greather than 8 gb
+
+select * from phone
+where brand_name='samsung' and ram_capacity>8;
+
+-- find all phone with samsung and snapdragon processor
+select * from phone;
+
+select brand_name,model,price,processor_brand from phone
+where processor_brand='snapdragon' and brand_name='samsung';
