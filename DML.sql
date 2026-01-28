@@ -164,3 +164,76 @@ select * from phone
 where processor_brand='mediatek'; 
 
 
+-- update 
+update session33.phone
+set processor_brand='bionic_apple'
+where processor_brand='bionic';
+
+select * from phone where processor_brand='bionic_apple';
+
+update session33.phone
+set processor_brand='bionic'
+where processor_brand='bionic_apple';
+
+
+select * from phone where processor_brand='bionic';
+
+select distinct(brand_name) from phone;
+
+-- update sharp 
+update session33.phone
+set brand_name = 'new_brand'
+where brand_name='sharp';
+
+select * from phone where brand_name ='new_brand';
+
+
+show tables;
+
+
+
+update session33.users
+set email='pop@123gmail.com',password='p1324654'
+where name = 'pop';
+
+update session33.users
+set email='tom@123',password='125554'
+where name='tom';
+
+
+
+select * from phone
+where price>200000;
+
+-- delete this data
+
+delete from phone
+where price>200000;
+
+select * from phone where
+price >150000;
+
+delete from phone
+where primary_camera_rear>125;
+
+select brand_name ,primary_camera_rear from phone where primary_camera_rear>100;
+
+
+-- aggregation function 
+
+-- find the costlier samsung  mobile
+select max(price) from session33.phone
+where brand_name='samsung';
+
+
+
+select * from phone where price=110999 and brand_name='samsung';
+
+-- average rating
+
+select avg(rating) from phone where brand_name='apple';
+
+select avg(price) from phone where brand_name='samsung';
+
+select sum(price) from session33.phone
+
