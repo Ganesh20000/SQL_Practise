@@ -235,5 +235,66 @@ select avg(rating) from phone where brand_name='apple';
 
 select avg(price) from phone where brand_name='samsung';
 
-select sum(price) from session33.phone
+select sum(price) from session33.phone;
 
+select sum(price) from phone
+where brand_name='apple';
+
+select sum(price) from phone
+where brand_name='samsung';
+
+-- find  no of oneplus phones
+
+select count(*) from phone
+where brand_name='oneplus';
+
+
+select count(brand_name) from phone
+where brand_name='apple';
+
+-- find no of unique brand in dataset
+select count(distinct(brand_name)) from phone;
+
+
+select count(distinct(processor_brand)) from phone; 
+
+select std(screen_size) from phone; 
+
+select variance(screen_size) from phone;
+
+
+-- scalar function in sql 
+select  abs(price - 50000) as 'price2' from phone;
+
+
+select round(processor_speed) from phone;
+
+-- ceil 
+select ceil(screen_size) from phone;
+
+-- floor 
+
+select floor(screen_size) from phone;
+
+-- ceil 
+select ceil(processor_speed) from phone;
+
+
+-- practise 
+-- find the average battery capacity and the average primary rear camera resolution for all smartphone with alter
+-- price greather than or equal to 100000
+
+select avg(battery_capacity), avg(primary_camera_rear) from phone
+where price >=100000;
+
+-- find the No of 5g enable capacity 
+SELECT COUNT(*) 
+FROM phone
+WHERE has_5g = 'TRUE';
+
+
+
+-- 
+
+select avg(internal_memory) from phone
+where refresh_rate>120 and primary_camera_front>=20;
