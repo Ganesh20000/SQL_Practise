@@ -298,3 +298,50 @@ WHERE has_5g = 'TRUE';
 
 select avg(internal_memory) from phone
 where refresh_rate>120 and primary_camera_front>=20;
+
+
+-- Create a phone table where:
+-- price must always be greater than 0
+-- rating must be between 0 and 5
+-- model_name cannot be null
+
+create table if not exists phone2(
+price int check(price>0),
+rating decimal check(rating between 0 and  5),
+model_name varchar(255) not null);
+
+desc phone2;
+
+alter table phone2
+add column discount_price int,
+add constraint check_price
+check (discount_price<price);
+ 
+ 
+ desc phone2;
+ 
+ -- decimal rating column to allow decimal values
+ 
+ alter table phone2
+modify rating decimal(8,2);
+
+
+
+
+-- add new column lauch year
+
+alter table phone2
+add column lauch_year int;
+
+
+-- rename the lauch_year to Year_of_lauch 
+
+alter table phone2 rename column lauch_year to Year_of_lauch;
+
+
+
+desc phone2;
+
+-- add not null constrainst to brand_name
+alter table phone
+modify column brand_name varchar(255) not null;
