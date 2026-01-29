@@ -345,3 +345,51 @@ desc phone2;
 -- add not null constrainst to brand_name
 alter table phone
 modify column brand_name varchar(255) not null;
+
+-- alter table index primary key 
+
+-- Create a PRIMARY KEY on a column phone_id.
+
+
+select * from phone;
+
+alter table phone2
+add column index_ int not null auto_increment;
+
+
+alter table phone2
+drop column index_;
+
+desc phone2;
+
+select * from phone;
+
+-- modify the battery capacity to 2000 to 7000 mah
+
+alter table phone
+modify column battery_capacity int 
+check (battery_capacity  between 2000 and 5000);
+
+
+
+select * from users;
+
+alter table users
+add column age int check(age>18);
+
+
+-- age value between 19-22 only
+
+alter table users
+modify column age int check( age between 19 and 22);
+
+desc users;
+
+insert into users values(10,"l","l@1","ll",22);
+
+select * from users;
+
+
+
+
+
