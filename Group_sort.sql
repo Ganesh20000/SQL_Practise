@@ -1,4 +1,4 @@
--- Grouping and sorting
+
 
 select * from phone;
 
@@ -134,4 +134,41 @@ where has_nfc='true' and has_ir_blaster='true'
 group by brand_name
 order by count  desc limit 0,2;
 
-select * from phone;    		
+-- find all samsung phone 5g enable smartphone and find the avg price foe nfc and not nfc
+
+select has_nfc, avg(price) from phone
+where brand_name='samsung' and has_5g='true'
+group by has_nfc;
+
+-- find the costlist phone
+select brand_name,price from phone
+order by price desc limit 1;
+
+
+-- find the average price of smartphone which have more than  20 phones
+
+select brand_name,count(*), avg(price)
+from phone
+group by brand_name
+having count(*) >20
+order by avg(price) desc;
+
+
+-- find the avg rating of smartphone brand which have more than 20 phne
+select brand_name ,avg(rating),count(*) from phone
+group by brand_name
+having count(*) >20;
+
+
+
+-- find the 
+
+select brand_name, avg(ram_capacity) from phone
+where refresh_rate>90 and fast_charging_available=1
+group by brand_name;
+
+select brand_name,avg(ram_capacity) ,count(*) from phone
+where refresh_rate>90 and fast_charging_available=1
+group by brand_name
+having count(*)>10
+order by avg(ram_capacity) desc limit 0,3;
