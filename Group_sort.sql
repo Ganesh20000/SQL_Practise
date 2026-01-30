@@ -250,3 +250,52 @@ limit 5;
 -- Average Price by Brand
 -- Find the average price of smartphones for each brand, 
 -- and display only those brands whose average price is greater than ₹30,000.
+
+
+select brand_name ,round(avg(price),2) from phone
+group by brand_name
+having avg(price) >30000
+order by avg(price) desc ;
+
+
+-- Count of 5G Models per Brand
+-- Group smartphones by brand and count how many models support 5G. Show only brands with more than 5 models.
+select * from phone;
+select brand_name,count(*) from phone
+where has_5g='true'
+group by brand_name
+having count(*) >5
+order by count(*) desc;
+
+-- Top Processor Brand by Average Rating
+-- Group by processor_brand and calculate the average rating. Return the processor brand with the highest average rating.
+
+select processor_brand, round(avg(rating),2) from phone
+group by processor_brand
+order by avg(rating) desc ;
+
+
+
+create table employee(
+emp_id int primary key,
+emp_name varchar(255),
+department varchar(255),
+salary int default '25000');
+
+desc employee;
+
+
+-- Write a query to find total runs scored by each batting team across all 
+-- seasons and sort the result in descending order of runs.
+
+select batter,sum(batsman_run) from ipl
+group by batter
+order by sum(batsman_run) desc limit 0,5;
+
+SELECT batting_team,
+       SUM(total_runs) AS total_runs
+FROM ipl_ball_by_ball
+GROUP BY batting_team
+ORDER BY total_runs DESC;
+
+SHOW COLUMNS FROM IPL;
