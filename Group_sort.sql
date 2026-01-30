@@ -197,4 +197,56 @@ order by sum(total_run) desc limit 0,5;
 select batter ,count(* ) from ipl
 where batsman_run=6
 group by batter
-order by count(*) desc limit 1,1
+order by count(*) desc limit 1,1;
+
+
+-- not possible beacuse incomplete data 
+-- find virat kholi performance against all ipl teams
+select * from ipl;
+
+select batter,ID, sum(batsman_run) from ipl
+where batter  in ('V Kohli')
+group by batter,ID;
+
+select * from ipl;
+
+select batter, sum(batsman_run) from ipl
+group by batter
+order by sum(batsman_run) desc;
+
+
+select * from ipl
+where batter='V kohli';
+
+-- find top 10 batsman with centuries in ipl 
+
+select batter,ID,sum(batsman_run) ,count(*) from ipl
+group by batter,ID
+HAVING  SUM(batsman_run)>100
+ORDER BY SUM(batsman_run) DESC;   
+
+
+-- find the top 5 batsman with high strike rate who played a min 1000 balls 
+
+select * from ipl;
+-- top 5 BATSMAN With highest strike rate who played min 1000
+select batter, sum(batsman_run)/count(batsman_run)*100 as 'strike_rate' from ipl
+group by batter
+having count(ballnumber)>1000
+order by strike_rate desc limit 5;
+
+
+select batter, 
+       (sum(batsman_run) * 100.0 / count(*)) as strike_rate
+from ipl
+group by batter
+having count(batsman_run) >1000
+order by strike_rate desc
+limit 5;
+
+
+-- practise question 
+
+-- Average Price by Brand
+-- Find the average price of smartphones for each brand, 
+-- and display only those brands whose average price is greater than ₹30,000.
