@@ -172,3 +172,29 @@ where refresh_rate>90 and fast_charging_available=1
 group by brand_name
 having count(*)>10
 order by avg(ram_capacity) desc limit 0,3;
+
+
+-- find the avg price phone brand with rating >70 and num phone more than 10 amoung all 5g enable phone
+
+select  brand_name,avg(price)  from phone
+where has_5g='True'
+group by brand_name
+having avg(rating)>70 and count(*) >10;
+
+-- pratice
+
+-- find the top  5 batsman in ipl
+
+select * from ipl;
+
+select batter, sum(total_run) from ipl
+group by batter
+order by sum(total_run) desc limit 0,5;
+
+
+-- find second highest 6 hitter in ipl
+
+select batter ,count(* ) from ipl
+where batsman_run=6
+group by batter
+order by count(*) desc limit 1,1
