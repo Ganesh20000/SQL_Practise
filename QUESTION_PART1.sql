@@ -76,4 +76,52 @@ GROUP BY BATTER
 ORDER BY TOP DESC LIMIT 0,10;
 
 -- Write a query to find bowlers who have taken more than 100 wickets.
-SELECT  FROM IPL;
+SELECT bowler,COUNT(*) FROM IPL
+WHERE ISWICKETDELIVERY=1
+GROUP BY BOWLER
+HAVING COUNT(*) >100
+ORDER BY COUNT(*) DESC;
+
+
+-- Write a query to calculate economy rate of each bowler
+-- (total_run per over), sorted by lowest economy first.
+SELECT * FROM IPL;
+
+
+SELECT BOWLER, SUM(TOTAL_RUN)*6/COUNT(*) AS 'ECONOMY_RATE' FROM IPL
+GROUP BY BOWLER
+ORDER BY ECONOMY_RATE;
+
+SELECT bowler,
+       ROUND(SUM(total_run) * 6.0 / COUNT(*), 2) AS economy_rate
+FROM IPL
+GROUP BY bowler
+HAVING COUNT(*) >= 300
+ORDER BY economy_rate;
+
+
+-- Write a query to find batters who have scored runs in more than 100 distinct overs.
+
+SELECT distinct(OVERS),BATTER  FROM IPL
+GROUP BY BATTER,OVERS;
+
+SELECT * FROM IPL;
+-- Write a query to find batters who scored more runs from boundaries than non-boundaries.
+
+SELECT BATTER ,SUM(TOTAL_RUN) FROM IPL
+WHERE TOTAL_RUN IN (6,4)
+GROUP BY BATTER
+ORDER BY SUM(TOTAL_RUN) DESC;
+
+-- Write a query to find BattingTeam-wise total wickets lost, sorted descending.
+SELECT BATTINGTEAM , SUM(ISWICKETDELIVERY) FROM IPL
+WHERE ISWICKETDELIVERY=1
+GROUP BY BATTINGTEAM;
+
+
+Write a query to find fielders involved in more than 50 dismissals.
+
+Write a query to find kind-wise count of dismissals, sorted by count descending.
+
+Write a query to find batters with average runs per ball greater than 1.2
+(minimum 500 balls faced).
