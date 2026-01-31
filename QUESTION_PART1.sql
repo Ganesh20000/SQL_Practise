@@ -76,4 +76,4 @@ GROUP BY BATTER
 ORDER BY TOP DESC LIMIT 0,10;
 
 -- Write a query to find bowlers who have taken more than 100 wickets.
-SELECT * FROM IPL;
+SELECT  FROM IPL;
