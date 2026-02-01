@@ -395,5 +395,8 @@ group by u.state
 having sum(o1.profit) >2000
 order by state desc ;
 
-
+use sample;
 select * from category;
+
+
+select * from users;
