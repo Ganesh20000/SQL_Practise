@@ -131,3 +131,212 @@ on m.user_id=u.user_id;
 -- outer join 
 
 -- sql set operation 
+
+-- union only remove duplicate 
+select * from person1
+union
+select *from person2;
+
+-- keep duplicate value 
+select * from person1
+union all
+select * from person2;
+
+-- except
+select * from person1
+except
+select * from person2;
+
+-- intercept
+
+select * from person1
+INTERSECT
+select * from person2;
+
+
+-- full join 
+select * from users1 u
+left join membership m
+on u.user_id=m.user_id
+union 
+select * from users1 u
+right join membership m
+on u.user_id=m.user_id;
+
+
+
+-- self join 
+
+select * from users1 u
+join users1 u2
+on u.user_id=u2.emergency_contact;
+
+select user_id from users1 intersect select emergency_contact from users1;
+
+
+select user_id from users intersect select user_id from users1;
+
+create table emplo(
+id int,
+ename varchar(255),
+dept varchar(255),
+com_id int);
+
+create table computer(
+com_id int ,
+make varchar(255),
+model varchar(255),
+makeyear date);
+
+INSERT INTO emplo (id, ename, dept, com_id) VALUES
+(1, 'Alice', 'HR', 101),
+(2, 'Bob', 'Finance', 102),
+(3, 'Charlie', 'IT', 103),
+(4, 'David', 'Marketing', 104),
+(5, 'Eva', 'Sales', 105),
+(6, 'Frank', 'Operations', 106),
+(7, 'Grace', 'IT', 107),
+(8, 'Helen', 'Finance', 108),
+(9, 'Ian', 'HR', 109),
+(10, 'Jack', 'Sales', 110);
+
+INSERT INTO computer (com_id, make, model, makeyear) VALUES
+(101, 'Dell', 'Inspiron 15', '2020-01-01'),
+(102, 'HP', 'Pavilion x360', '2019-05-01'),
+(103, 'Lenovo', 'ThinkPad T14', '2021-03-01'),
+(104, 'ASUS', 'MacBook Air', '2022-07-01'),
+(105, 'Asus', 'VivoBook S15', '2020-09-01'),
+(106, 'HP', 'Aspire 5', '2018-11-01'),
+(107, 'HP', 'Surface Laptop 4', '2021-04-01'),
+(108, 'HP', 'Galaxy Book Pro', '2022-02-01'),
+(109, 'DELL', 'Gram 14', '2020-06-01'),
+(110, 'Toshiba', 'Satellite Pro', '2017-08-01');
+
+
+drop table computer;
+
+-- order of the execution 
+select make,count(*) from emplo e right join computer c on e.com_id=e.com_id
+where model <> 'hp' group by make HAVING COUNT(*)>=15 order by make DESC;
+
+-- FROM JOIN WHERE GROUP HAVING SELECT DISTINCT ORDER 
+
+
+-- JOINING ONE AND TWO OR MORE TABLE;
+select * from class;
+
+-- inner join 
+SELECT * from students s
+inner join class c
+on s.class_id=c.class_id
+and s.enrollment_year=c.class_year;
+
+-- left join 
+SELECT * from students s
+left join class c
+on s.class_id=c.class_id
+and s.enrollment_year=c.class_year;
+
+
+use sample;
+-- rightjoin
+select * from students s
+right join class c
+on s.class_id=c.class_id
+and s.enrollment_year=c.class_year;
+
+
+--
+
+-- alter table category rename column category to verticals;
+-- alter table category rename column vertical to category;
+
+-- alter table name adding 
+alter table category 
+add column name varchar(255);
+
+
+-- dropping the column 
+alter table category
+drop column name;
+
+select * from category;
+
+
+-- find the order name and corresponding category name 
+
+SELECT * FROM order_details O
+join ORDERS O1
+ON O.order_id=O1.order_id
+JOIN USERS U
+ON U.USER_ID=O1.USER_ID;
+
+-- find order_id and name and city by joining
+select o.order_id,u.name,u.city from orders o
+join users u
+on o.user_id=u.user_id;
+
+
+-- find order_id product_category 
+
+select o1.order_id,c.category from order_details o1
+join category c
+on c.category_id=o1.category_id;
+
+-- filter row in joining
+
+select * from orders o1 
+join users u
+on u.user_id=o1.user_id
+where city not in ('pune','mumbai','ahmedabad') and u.name='DIVSHA';
+
+
+
+-- find all the order under chairs is the category 
+
+select * from category c
+join order_details o
+on o.category_id=c.category_id
+where c.vertical='Chairs';
+
+
+select distinct(vertical) from category;
+
+-- find all profitable order in this 
+
+select o.order_id ,sum(o.profit) as 'profit' from order_details o
+join orders o1
+on o.order_id=o1.order_id
+group by o.order_id
+having profit >0
+order by profit desc;
+
+
+
+select o.order_id ,sum(o.profit) as 'profit' from order_details o
+join orders o1
+on o.order_id=o1.order_id
+where profit >0
+group by o.order_id
+order by profit desc;
+
+
+-- find the customer who placed max no of order name 
+
+select u.name,count(*) from orders o1
+join users u
+on u.user_id=o1.user_id
+group by u.name
+order by count(*) desc;
+
+-- find higesht order order by user name order id city
+select o.order_id,u.name,sum(o.amount),count(*),u.city from order_details o
+inner join orders o1
+on o.order_id=o1.order_id
+inner join users u
+on u.user_id=o1.user_id
+group by o.order_id,u.name,u.city
+having sum(o.amount)>5500
+order by sum(o.amount) desc limit 0,5;
+
+
