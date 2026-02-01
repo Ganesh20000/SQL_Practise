@@ -323,11 +323,15 @@ order by profit desc;
 
 -- find the customer who placed max no of order name 
 
-select u.name,count(*) from orders o1
-join users u
-on u.user_id=o1.user_id
-group by u.name
-order by count(*) desc;
+-- select u.name,count(*) from orders o1
+-- join users u
+-- on u.user_id=o1.user_id
+-- group by u.name
+-- order by count(*) desc;
+
+
+
+
 
 -- find higesht order order by user name order id city
 select o.order_id,u.name,sum(o.amount),count(*),u.city from order_details o
@@ -340,3 +344,56 @@ having sum(o.amount)>5500
 order by sum(o.amount) desc limit 0,5;
 
 
+
+-- find the customer who place max no of order 
+
+select u.name ,count(*)  from orders o
+join users u
+on o.user_id=u.user_id
+group by u.name
+order by count(*) desc;
+
+-- find which is most profitable category 
+
+select c.category ,sum(profit) as 'profits' from order_details o
+join category c
+on o.category_id=c.category_id
+group by c.category
+having  profits >0
+order by profits desc;
+
+
+-- most profitable verticles 
+
+select c.vertical ,sum(profit) as 'profits' from order_details o
+join category c
+on o.category_id=c.category_id
+group by c.vertical
+having  profits >0
+order by profits desc limit 0,5;
+
+
+-- find all the category have profit greather than 5000
+select u.category ,sum(profit) as 'profit_' from order_details o
+join category u
+on u.category_id=o.category_id
+group by u.category
+having profit_ >5000
+order by profit_ desc;
+
+
+-- find the most profitable state 
+
+select u.state,sum(o1.profit) as 'state' from orders o
+join order_details o1
+on o.order_id=o1.order_id
+join users u
+on u.user_id=o.user_id
+join category c
+on o1.category_id=c.category_id
+group by u.state
+having sum(o1.profit) >2000
+order by state desc ;
+
+
+select * from category;
