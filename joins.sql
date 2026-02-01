@@ -400,3 +400,111 @@ select * from category;
 
 
 select * from users;
+
+
+show tables;
+
+CREATE TABLE Employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    salary INT,
+    manager_id INT
+);
+CREATE TABLE Departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50),
+    location VARCHAR(50)
+);
+
+
+CREATE TABLE Projects (
+    project_id INT PRIMARY KEY,
+    project_name VARCHAR(50),
+    dept_id INT,
+    budget INT
+                         );
+
+INSERT INTO Departments VALUES
+(10, 'HR', 'Mumbai'),
+(20, 'IT', 'Pune'),
+(30, 'Finance', 'Delhi'),
+(40, 'Marketing', 'Bangalore');
+INSERT INTO Employees VALUES
+(1, 'Amit', 20, 60000, NULL),
+(2, 'Neha', 20, 50000, 1),
+(3, 'Ravi', 30, 45000, 1),
+(4, 'Priya', 10, 40000, 3),
+(5, 'Karan', 40, 55000, 1),
+(6, 'Sneha', NULL, 30000, NULL);
+
+
+INSERT INTO Projects VALUES
+(101, 'ERP System', 20, 500000),
+(102, 'Payroll', 10, 150000),
+(103, 'Audit', 30, 200000),
+(104, 'Ad Campaign', 40, 300000),
+(105,'Audit',24,450000);
+
+
+select * from employees;
+
+
+select * from projects;
+
+select * from departments;
+
+-- Display employee name, department name, and location for all employees.
+
+select E.emp_name,d.dept_name,d.location from employees E
+join departments D
+on E.dept_id=D.dept_id;
+
+
+-- List all employees including those without a department.
+
+SELECT * FROM EMPLOYEES E
+LEFT JOIN DEPARTMENTS D
+ON E.DEPT_ID=D.DEPT_ID;
+
+
+-- Show department name and total salary paid in each department.
+
+SELECT D.DEPT_NAME,SUM(E.SALARY) FROM DEPARTMENTS D
+JOIN  EMPLOYEES E
+ON E.DEPT_ID=D.DEPT_ID
+GROUP BY D.DEPT_NAME;
+
+SELECT * FROM EMPLOYEES;
+SELECT *FROM DEPARTMENTS;
+
+-- Display employees and their project names based on department.
+
+select E.EMP_NAME,PROJECT_NAME  from employees E
+join departments D
+ON E.DEPT_ID=D.DEPT_ID
+JOIN PROJECTS P
+ON P.DEPT_ID=D.DEPT_ID;
+
+
+-- Find departments that do not have any employees.
+
+-- Display employee name and manager name (self join).
+SELECT * FROM EMPLOYEES
+
+
+SELECT * FROM PROJECTS;
+
+USE SAMPLE;
+
+SELECT E.EMP_NAME ,D.EMP_NAME FROM EMPLOYEES E
+JOIN EMPLOYEES D
+ON D.MANAGER_ID=E.EMP_ID;
+
+
+SELECT 
+    e.emp_name AS employee_name,
+    m.emp_name AS manager_name
+FROM Employees e
+LEFT JOIN Employees m
+ON e.manager_id = m.emp_id;
