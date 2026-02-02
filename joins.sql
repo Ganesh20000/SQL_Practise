@@ -509,3 +509,12 @@ FROM Employees e
 LEFT JOIN Employees m
 ON e.manager_id = m.emp_id;
 
+
+select * from category;
+
+select c.vertical ,sum(profit) as 'pro' from order_details O
+join category c
+on c.category_id=o.category_id
+GROUP BY c.vartical 
+having pro >5000
+order by pro desc;
