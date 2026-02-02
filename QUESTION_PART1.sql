@@ -125,3 +125,34 @@ Write a query to find kind-wise count of dismissals, sorted by count descending.
 
 Write a query to find batters with average runs per ball greater than 1.2
 (minimum 500 balls faced).
+
+
+
+
+
+
+-- find second highest salary 
+
+show TABLES;
+
+select DISTINCT(salary) from emp
+order by salary desc limit 1,1; 
+
+
+select DISTINCT(salary) from employees
+order by salary desc limit 1,1;
+
+
+-- find third salary 
+select DISTINCT(salary) from employees
+order by salary desc limit 2,1
+
+
+-- show emp name start with a
+select * from emp
+where name like 'a%' ;
+
+
+-- show emp name end wih a
+select * from emp
+where name like "%a";
