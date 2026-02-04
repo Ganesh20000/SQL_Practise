@@ -74,3 +74,44 @@ where score ;
 select * from movies
 where score =(select max(score) from  movies 
 where votes> ( select avg(votes) from movies))
+
+
+
+use subquery;
+
+
+-- find the highest rated movie that has higher votes than > avg votes 
+
+show DATABASES;
+select * from movies 
+where score = (select max(score) from movies
+where votes >(select avg(votes) from movies))
+
+
+
+
+use subquery;
+
+show TABLES;
+
+select * from delivery_partner;
+
+select * from orders O
+join users u1
+on u1.user_id=o.user_id;
+
+
+use subquery;
+select * from users
+where user_id not in (select DISTINCT(user_id) from orders);
+
+
+
+-- select 
+
+use subquery;
+
+select director ,sum(gross) from movies
+GROUP BY director
+order by sum(gross) desc
+limit 0,3;
