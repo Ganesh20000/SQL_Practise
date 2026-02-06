@@ -111,7 +111,31 @@ where user_id not in (select DISTINCT(user_id) from orders);
 
 use subquery;
 
-select director ,sum(gross) from movies
+select * from users;
+
+show tables;
+
+select * from users
+where user_id not in (select DISTINCT(user_id) from orders)
+
+
+-- find the top 3 director in term of total gross incomme
+
+
+select * from movies
+where director in (select director  from movies
 GROUP BY director
-order by sum(gross) desc
-limit 0,3;
+order by sum(gross) desc limit 0,3)
+
+
+with top_director as (select director ,sum(gross) as 'gross_' from movies
+GROUP BY director
+order by gross_ desc limit 3)
+
+
+select * from top_director;x
+select director  from movies
+GROUP BY director
+order by sum(gross) desc limit 0,3;
+
+
