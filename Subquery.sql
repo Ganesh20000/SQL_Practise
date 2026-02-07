@@ -1,3 +1,5 @@
+
+
 use subquery;
 
 
@@ -189,3 +191,103 @@ select * from movies
 where star in ( select * from top_actors);
 
 
+-- table subqery
+
+use subquery;
+
+
+-- find most profitable movie of each year
+
+select year , max(gross-budget) from movies
+group by year;
+
+
+select * from movies
+where (year ,gross-budget) in (
+select year , max(gross-budget) from movies
+group by year);
+
+
+-- find the highest rated movie of each genre votes cutoff of 25000
+select genre,avg(score) from movies
+where votes>25000
+group by genre;
+
+
+select * from movies
+where (genre,score) in (select genre,max(score) from movies
+where votes>25000
+group by genre);
+
+with genre_rating as (select genre,max(score) from movies
+where votes>25000
+group by genre)
+
+select * from movies
+where (genre,score) in (select * from genre_rating) and votes >25000;
+
+
+with table3 as (select star,director,  max(gross) from movies
+group by star,director
+order by sum(gross) desc )
+
+select * from movies
+where (director,star,gross) in (select * from table3);
+
+-- correlated sub query;
+
+-- FIND THE MOVIES THAT HAVE HIGHER RATING THAN AVG RATING OF MOVIES IN SAME GENRE 
+
+SELECT * FROM MOVIES M1
+WHERE SCORE > (SELECT AVG(SCORE) FROM MOVIES M2 WHERE M2.GENRE=M1.GENRE); 
+
+
+
+show tables;
+
+use subquery;
+select * from employee;
+
+
+
+select * from employee;
+
+
+
+
+alter table employee add column salary int;
+-- Step 1: Add a new column
+ALTER TABLE employees ADD salary INT;
+
+-- Step 2: Fill it with random values (example: between 30,000 and 100,000)
+UPDATE employee
+SET salary = FLOOR(RAND() * (100000 - 30000 + 1)) + 30000;
+
+
+-- find the emp who is earing more salary than the	average salary earned by employee of same designation 
+
+select * from employee e1
+where e1.salary >= (select avg(salary) from employee e where e1.education=e.education);
+
+select * from employee e1
+where salary >= (select avg(salary) from employee e where e1.city=e.city);
+
+
+-- chatgpt answer to make fast execute 
+SELECT e1.*
+FROM employee e1
+JOIN (
+    SELECT city, AVG(salary) AS avg_salary
+    FROM employee
+    GROUP BY city
+) e2
+ON e1.city = e2.city
+WHERE e1.salary >= e2.avg_salary;
+
+SELECT *
+FROM (
+    SELECT *,
+           AVG(salary) OVER (PARTITION BY city) AS avg_salary
+    FROM employee
+) t
+WHERE salary >= avg_salary;
