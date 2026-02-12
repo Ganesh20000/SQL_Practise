@@ -131,3 +131,57 @@ Frame Boundaries:
 -- CURRENT ROW: The row currently being processed.
 -- UNBOUNDED FOLLOWING: End at the last row of the partition.
 --  N PRECEDING/N FOLLOWING: N rows before/after the current row.
+
+use subquery;
+-- nth  value
+select *,
+NTH_VALUE(name,2) over( PARTITION BY branch ORDER BY mark desc ROWS BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING)
+from mark;
+
+
+-- question on this 
+
+-- find the branch topper
+
+
+select * from 
+(select *,
+FIRST_VALUE(name) OVER(PARTITION BY branch order by mark desc) as 'topper_name',
+FIRST_VALUE(mark) over(PARTITION BY branch ORDER BY mark desc) as 'topper_mark'
+from mark)  t
+where t.name=t.topper_name and t.mark=t.topper_mark
+
+
+-- find the last of each branch wise student
+
+select * from 
+    (select *,
+            LAST_VALUE(name) over  W as last_name,
+            LAST_VALUE(mark) OVER W as last_mark
+            from mark
+            WINDOW w as (PARTITION BY branch ORDER BY mark desc rows BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING)
+            )  t
+where t.mark=t.last_mark and t.name=t.last_name;
+
+
+SELECT *
+FROM (
+    SELECT *,
+           LAST_VALUE(name) OVER w AS last_name,
+           LAST_VALUE(mark) OVER w AS last_mark
+    FROM mark
+    WINDOW w AS (
+        PARTITION BY branch 
+        ORDER BY mark DESC 
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    )
+) t
+WHERE t.mark = t.last_mark 
+  AND t.name = t.last_name;
+
+
+
+
+UPDATE mark
+set mark=5
+where name="Rupesh"
