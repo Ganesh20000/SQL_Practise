@@ -193,9 +193,80 @@ where salary between (select avg(salary) from emp)
 			and  	(select max(salary) from emp);
 
 -- Find employees who joined before the average joining year.
-
+use subquery;
 -- Find employees who earn more than any employee in department ‘HR’.
 select * from emp2
 where salary > any (select salary from emp2 where dept = "HR");
 
-SELECT * FROM EMP WHERE DEPT="HR";
+-- Find employees who joined before the average joining year.
+select * from employee
+where joiningyear < (select avg(joiningyear) from employee);
+
+
+
+-- hard one 
+
+-- ADVANCED / CORRELATED SUBQUERY QUESTIONS
+
+-- Find employees who earn more than the average salary of their own department (correlated).
+select * from emp2 e1
+where salary > (select avg(salary) from emp2 e2 where e2.dept=e1.dept);
+
+
+
+-- Find the highest-paid employee in each department.
+
+select * from emp2 e1
+where salary = (select max(salary) from emp2 e2 where e2.dept=e1.dept);
+ -- Find students who scored above average in their own class.
+
+ 
+ -- find student who scored above average in their science subject
+-- select * from student_scores s
+-- where science = (select avg(science) from student_scores s2 where  s.science=s2.science);
+
+ 
+use subquery;
+
+
+-- Find movies with rating higher than the average rating of their genre.
+select * from movies m
+where score >(select avg(score) from movies m2 where m2.genre=m.genre) ;
+
+
+-- Find employees whose salary is greater than all employees in another department.
+
+select * from emp2 e
+where salary > (select avg(salary) from emp2 e2 where e2.dept<> e.dept);
+select avg(salary) from emp2;
+-- Find departments where average salary is greater than company average.
+
+-- Find customers who placed orders worth more than their own average order value.
+
+
+select * from orders o
+where amount > (select avg(amount) from orders o1 where o1.user_id=o.user_id) ;
+
+select avg(amount) from orders ;
+
+desc orders;
+
+-- Find employees who are older than the average age of their department.
+select avg(age) from emp2;
+select * from emp2 e
+where age > (select avg(age) from emp2 e2 where e2.dept=e.dept);
+
+
+-- Find products that have price higher than average price of their category.
+
+select * from product p
+where price > (select avg(price) from product p2 where p2.category_id=p.category_id);
+
+-- Find employees whose salary is greater than at least one employee in every department.
+
+select * from emp2 e
+where salary > all (select min(salary) from emp2 e1 where e1.dept=e.dept);
+	
+-- ANY means:
+
+-- Greater than at least one value from the subquery result.

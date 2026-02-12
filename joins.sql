@@ -395,6 +395,36 @@ group by u.state
 having sum(o1.profit) >2000
 order by state desc ;
 
+
+
+
+
+-- find the category with profit higher than 5000
+
+
+select c.category ,sum(profit) as 'pro' from order_details O
+join category c
+on c.category_id=o.category_id
+group by c.category
+having pro >5000
+order by pro desc ;
+
+
+-- find the vertical with profit higher than  5000 
+
+use sample;
+select c.vertical ,sum(profit) as 'pro' from order_details O
+join category c
+on c.category_id=o.category_id
+GROUP BY c.vertical
+having pro >2500
+order by pro  desc;
+
+select * from category;
+
+
+select * from order_details;
+
 use sample;
 select * from category;
 
@@ -509,12 +539,3 @@ FROM Employees e
 LEFT JOIN Employees m
 ON e.manager_id = m.emp_id;
 
-
-select * from category;
-
-select c.vertical ,sum(profit) as 'pro' from order_details O
-join category c
-on c.category_id=o.category_id
-GROUP BY c.vartical 
-having pro >5000
-order by pro desc;
