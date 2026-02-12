@@ -62,3 +62,72 @@ where score > (
 );
 
 -- rank the branch wise 
+use subquery;
+
+
+-- rank and dense rank and row number
+-- i have to rank all branch every branch one student 
+
+select *,
+rank() over(ORDER BY mark desc)
+from marks;
+
+-- what if branch wise
+select *,
+rank() over(PARTITION BY branch ORDER BY mark desc),
+DENSE_RANK() over(PARTITION BY branch ORDER BY mark desc),
+ROW_NUMBER() over()
+from mark;
+
+--RANK() assigns the same rank to tied values but skips the next rank(s).  For example, if two rows tie for rank 2, the next distinct value gets rank 4 (skipping 3).
+ 
+--DENSE_RANK() also assigns the same rank to tied values but does not skip ranks, ensuring consecutive numbering.  In the same example, the next distinct value gets rank 3. 
+
+-- row number
+--create roll no from branch and mark
+select *,
+CONCAT(branch,'-',ROW_NUMBER() over(PARTITION BY branch))
+from mark;
+
+
+-- find top most paying customer for each month
+
+select * from orders;
+select MONTHNAME(date) AS 'MONTH',user_id,sum(amount) AS 'SUM OF AMOUNT',
+RANK() OVER(PARTITION BY MONTHNAME(DATE) ORDER BY SUM(AMOUNT) DESC) AS 'RANK MONTH WISE'
+
+from orders
+GROUP BY MONTHNAME(date),user_id;
+
+
+--
+SELECT * FROM (
+                SELECT MONTHNAME(DATE) AS 'MONTH',USER_ID ,SUM(AMOUNT) AS 'SUM',
+                RANK() OVER(PARTITION BY MONTHNAME(DATE) ORDER BY SUM(AMOUNT) DESC) as 'ranks'
+                FROM ORDERS
+                GROUP BY MONTHNAME(DATE),USER_ID) T
+                where t.ranks<3
+                ORDER BY month desc , ranks asc;
+
+
+
+-- first value and last value  and nth values 
+use subquery;
+
+-- which give wrong value 
+select *,
+FIRST_VALUE(name) over(ORDER BY mark desc),
+LAST_VALUE(name) over(ORDER BY mark asc)
+from marks; 
+
+-- frames
+select *,
+LAST_VALUE(name) over(ORDER BY mark desc rows BETWEEN UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING)
+from marks;
+
+
+Frame Boundaries:
+-- UNBOUNDED PRECEDING: Start from the first row of the partition.
+-- CURRENT ROW: The row currently being processed.
+-- UNBOUNDED FOLLOWING: End at the last row of the partition.
+--  N PRECEDING/N FOLLOWING: N rows before/after the current row.
