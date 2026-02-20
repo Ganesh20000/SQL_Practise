@@ -1,0 +1,28 @@
+1) what is sql 
+SQL (Structured Query Language) is a standardized programming language used to manage and manipulate relational databases.  It allows users to perform tasks like storing, retrieving, updating, and deleting data in a structured way using tables made up of rows and columns. 
+
+
+2) what a difference between data and information ?
+
+data refer to raw,unprocessed ,facts,figure or symbol such as number ,text and images,videos 
+
+information is the data that has been processed, organized,structured and given context to make it meaningful and userful.
+
+3) what is the database and dbms ?
+A database is an organized collection of structured data, typically stored electronically in a computer system, designed for efficient storage, retrieval, management, and updating. 
+
+A Database Management System (DBMS) is the software that interacts with the database, allowing users and applications to create, read, update, and delete data.
+
+4) What is Relational Database Management System?
+RDBMS stands for Relational Database Management System.  It is a software system used to create, manage, and interact with relational databases, which store data in structured tables composed of rows and columns. 
+
+5) State at least 5 names of Database Management System or Software.
+MySQL
+oracle
+mongo db
+postresql 
+redis 
+maria db
+
+
+
